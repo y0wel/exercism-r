@@ -1,2 +1,2 @@
 # exercism
-Some solutions for the exercism R-Track
+My solutions for the coding challenges of exercism.io
