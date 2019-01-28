@@ -5,15 +5,14 @@ anagram <- function(subject, candidates) {
   if(length(candidates) == 0) {
     return(result)
   }
-  subject <- table(unlist(strsplit(tolower(subject), split = "")))
-  for(i in 1:length(candidates)) {
-    check <- table(unlist(strsplit(tolower(candidates[i]), split = "")))
-    if(all(names(subject) == names(check)) == T & 
-       length(subject) == length(check)) {
-      if (min(subject - check) == 0 & max(subject - check) == 0) {
-        result <- append(result, candidates[i])
-      }
-    }
+  cand_list <- lapply(strsplit(tolower(candidates), split = ""), sort)
+  subject <- sort(strsplit(tolower(subject), split = "")[[1]])
+  cand_list <- lapply(cand_list, function(x) paste0(x, collapse = ""))
+  subject <- paste0(subject, collapse = "")
+  if(length(cand_list) == 1 & all(subject == cand_list[[1]]) == F) {
+    return(result)
+  } else {
+    result <- candidates[which(lapply(cand_list, function(i) all(match(i, subject))) == TRUE)]
   }
   return(result)
 }
